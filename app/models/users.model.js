@@ -58,7 +58,19 @@ Users.update = function (newuser, result) {
   console.log(newuser);
   db.query(
     "UPDATE users SET typeuser = ?, username = ?, avatar = ?, phone = ?, email = ?, password = ?, salt = ?, address  =?, lastlogin = ?, createdate = ?, active = ? WHERE id = ?",
-    [newuser.username, newuser.phone, newuser.email, newuser.password],
+    [
+      newuser.typeuser,
+      newuser.username,
+      newuser.avatar,
+      newuser.phone,
+      newuser.email,
+      newuser.password,
+      newuser.salt,
+      newuser.address,
+      newuser.lastlogin,
+      newuser.createdate,
+      newuser.active,
+    ],
     function (err, users) {
       if (err) {
         result(null);
