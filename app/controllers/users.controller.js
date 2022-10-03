@@ -36,3 +36,14 @@ exports.update_users = function (req, res) {
     res.send({ result: respnse });
   });
 };
+
+//
+exports.deleteAll = function (req, res) {
+  Users.removeAll(function (ree, data) {
+    if (err) {
+      res.redirect("/500");
+    } else {
+      res.redirect("/users?delete=true");
+    }
+  });
+};

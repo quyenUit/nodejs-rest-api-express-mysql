@@ -70,16 +70,44 @@ Users.update = function (newuser, result) {
       newuser.lastlogin,
       newuser.createdate,
       newuser.active,
+      newuser.id,
     ],
     function (err, users) {
       if (err) {
         result(null);
-        console.log("Unseccessfully");
+        console.log("unsuccessfully");
       } else {
         result(newuser);
       }
     }
   );
+};
+
+Users.removeAll = function () {
+  db.query("DELETE FROM users", function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log(`delete ${res.affectedRows} users`);
+    result(null, res);
+  });
+};
+
+// email
+Users.findByEmail = function (email, result) {
+  db.query(`SELECT * FROM users WHERE email = '${email}'`, function (err, res) {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    if (res.length) {
+      result(null, res[0]);
+      return;
+    }
+    result(null, null);
+  });
 };
 
 module.exports = Users;
