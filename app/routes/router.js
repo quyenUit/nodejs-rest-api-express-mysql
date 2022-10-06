@@ -10,7 +10,7 @@ const userMiddleware = require("../middlewares/users");
 
 router.post("/sign-up", userMiddleware.validateRegister, (req, res, next) => {
   db.query(
-    `SELECT * FROM users WHERE LOWER(username = ?) = LOWER(${db.escape(
+    `SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(
       req.body.username
     )});`,
     (err, result) => {
@@ -28,9 +28,10 @@ router.post("/sign-up", userMiddleware.validateRegister, (req, res, next) => {
           } else {
             //has hashed pw => add to database
             db.query(
-              `INSERT INTO users (id, username, password, createdate) VALUES ("${uuid.v4()}", ${db.escape(
+              `INSERT INTO users (id, username, password, createdate) VALUES ("${uuid.v4()}","${db.escape(
                 res.body.username
-              )}, ${db.escape(hash)}, now())`,
+              )}","${db.escape(hash)}",
+              now())`,
               (err, result) => {
                 if (err) {
                   throw err;
