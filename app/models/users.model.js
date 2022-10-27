@@ -1,6 +1,6 @@
 const db = require("../config/connect");
 
-const Users = function () {
+const Users = function (users) {
   this.typeuser = users.typeuser;
   this.username = users.username;
   this.avatar = users.avatar;
@@ -95,6 +95,20 @@ Users.removeAll = function () {
   });
 };
 
+Users.check_login = function (data, result) {
+  db.query(
+    "SELECT * FROM users WHERE username = ? AND password = ?",
+    [data.username, data.password],
+    function (err, users) {
+      if (err || users.length == 0) {
+        result(null);
+      } else {
+        result(users[0]);
+      }
+    }
+  );
+};
+//////////////////////////////////////////////////////////////////////////////////////////////
 // email
 Users.findByEmail = function (email, result) {
   db.query(`SELECT * FROM users WHERE email = '${email}'`, function (err, res) {
@@ -109,5 +123,6 @@ Users.findByEmail = function (email, result) {
     result(null, null);
   });
 };
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = Users;

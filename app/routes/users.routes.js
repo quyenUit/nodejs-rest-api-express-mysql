@@ -1,5 +1,7 @@
 module.exports = function (router) {
   var userController = require("../controllers/users.controller");
+  // var loginController = require("../controllers/auth/login.controller");
+  // var registerController = require("../controllers/auth/register.controller");
 
   router.get("/users/list", userController.get_list);
 
@@ -11,5 +13,9 @@ module.exports = function (router) {
 
   router.put("/users/update", userController.update_users);
 
-  router.delete("/delete", userController.deleteAll);
+  router.delete("/users/delete", userController.deleteAll);
+
+  // router.post("/users/login", loginController.login);
+
+  // router.post("/api/register", registerController.handleRegister);
 };

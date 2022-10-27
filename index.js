@@ -1,28 +1,27 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const morgan = require("morgan");
+const app = express();
 const cors = require("cors");
-
+const bcrypt = require("bcryptjs");
 var bodyParser = require("body-parser");
-
-// const session = require("express-session");
+const _AuthMiddleWares = require("./app/config/_AuthMiddleWares");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-// app.use(cors());
-// app.get("/", (req, res, next) => {
-//   res.render("index");
-// });
+app.use(cors({ origin: true }));
 
+//
+require("./app/routes/home.routes")(app);
+//
+require("./app/routes/account.routes")(app);
+//
+app.use(_AuthMiddleWares.isAth);
 //
 require("./app/routes/users.routes")(app);
 
-//Node.js Login System mit Express, JWT & MySQL (Rest API)
-// const router = require("./app/routes/router");
-// app.use("/api", router);
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, function () {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
