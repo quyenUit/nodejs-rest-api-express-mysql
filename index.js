@@ -21,7 +21,7 @@ app.use(_AuthMiddleWares.isAth);
 //
 require("./app/routes/users.routes")(app);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, function () {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
